@@ -3,71 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Michael T's Portfolio - Aspiring Cybersecurity Specialist and Blockchain Developer">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-    <title>Michael T's Portfolio</title>
+    <title>Michael T's Portfolio | NetShadowM</title>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <p>I'm Michael T, an aspiring developer.</p>
-        <nav>
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#learning">Learning</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#socials">Socials</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>Michael T's Portfolio</h1>
+            <p class="tagline">Aspiring Cybersecurity Specialist & Blockchain Developer</p>
+            <nav>
+                <ul>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#learning">Learning</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#socials">Socials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p><strong>Education:</strong> Currently studying Mathematical Science at University of Lagos, Nigeria.</p>
-        <p><strong>Interests:</strong> Cybersecurity, Blockchain, Game Development.</p>
-        <p><strong>Career Choices:</strong> Aspiring Cybersecurity Specialist and Blockchain Developer.</p>
-        <p><strong>Past Experience:</strong> Developed games and Android apps.</p>
-    </section>
+    <main>
+        <section id="about" class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="icons8-router-100.png" alt="Michael T" class="profile-picture">
+                <div class="about-text">
+                    <p>Hello! I'm Michael T, also known as NetShadowM. I'm passionate about cybersecurity, blockchain technology, and game development.</p>
+                    <ul>
+                        <li><strong>Education:</strong> Mathematical Science, University of Lagos, Nigeria</li>
+                        <li><strong>Career Goals:</strong> Cybersecurity Specialist and Blockchain Developer</li>
+                        <li><strong>Experience:</strong> Game development and Android app creation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-    <section id="resume">
-        <h2>Resume</h2>
-        <p>View or download my CV below:</p>
-        <a href="resume.pdf" target="_blank">View CV</a> | <a href="resume.pdf" download>Download CV</a>
-    </section>
+        <section id="skills" class="container">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <ul id="programming-skills"></ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools :& Technologies</h3>
+                    <ul id="tech-skills"></ul>
+                </div>
+            </div>
+        </section>
 
-    <section id="learning">
-        <h2>Learning</h2>
-        <p>Currently learning about Linux, Networking, and Smart Contracts.</p>
-    </section>
+        <section id="resume" class="container">
+            <h2>Resume</h2>
+            <p>View or download my comprehensive CV to learn more about my experiences and qualifications:</p>
+            <div class="resume-buttons">
+                <a href="resume.pdf" target="_blank" class="button">View CV</a>
+                <a href="resume.pdf" download class="button">Download CV</a>
+            </div>
+        </section>
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>No active projects yet, but I'm continuously working on improving my skills!</p>
-    </section>
+        <section id="learning" class="container">
+            <h2>Current Learning Focus</h2>
+            <div class="learning-topics">
+                <div class="topic">
+                    <h3>Linux</h3>
+                    <p>Mastering command-line operations and system administration.</p>
+                </div>
+                <div class="topic">
+                    <h3>Networking</h3>
+                    <p>Understanding protocols, network security, and infrastructure design.</p>
+                </div>
+                <div class="topic">
+                    <h3>Smart Contracts</h3>
+                    <p>Developing and auditing blockchain-based smart contracts.</p>
+                </div>
+            </div>
+        </section>
 
-    <section id="socials">
-        <h2>Socials</h2>
-        <p>Connect with me on:</p>
-        <ul>
-            <li><a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a></li>
-            <li><a href="https://twitter.com/netshadowm" target="_blank">Twitter</a></li>
-            <li><a href="https://github.com/netshadowm" target="_blank">GitHub</a></li>
-        </ul>
-    </section>
+        <section id="projects" class="container">
+            <h2>Projects</h2>
+            <p>While I don't have active projects to showcase at the moment, I'm constantly working on personal projects to enhance my skills. Check back soon for updates!</p>
+            <div id="project-ideas"></div>
+        </section>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Feel free to reach out!</p>
-        <p>Email: <a href="mailto:NetShadowM@proton.me">NetShadowM@proton.me</a></p>
-        <p>WhatsApp: <a href="https://wa.me/+2347041029093" target="_blank">Message me</a></p>
-    </section>
+        <section id="socials" class="container">
+            <h2>Connect with Me</h2>
+            <ul class="social-links">
+                <li><a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://twitter.com/netshadowm" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                <li><a href="https://github.com/netshadowm" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+        </section>
+
+        <section id="contact" class="container">
+            <h2>Get in Touch</h2>
+            <form id="contact-form">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="button">Send Message</button>
+            </form>
+            <div class="contact-info">
+                <p>Choose your preferred method to send the message after submitting the form.</p>
+                <p>Alternatively, you can contact me directly:</p>
+                <p>Email: <a href="mailto:NetShadowM@proton.me">NetShadowM@proton.me</a></p>
+                <p>WhatsApp: <a href="https://wa.me/+2347041029093" target="_blank" rel="noopener noreferrer">Message me</a></p>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p>© 2024 Michael T. All Rights Reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Michael T. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    
+    <script src="script.js"></script>
 </body>
 </html>
