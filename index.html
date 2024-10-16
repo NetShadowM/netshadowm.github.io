@@ -6,6 +6,12 @@
     <meta name="description" content="Michael T's Portfolio - Aspiring Cybersecurity Specialist and Blockchain Developer">
     <link rel="stylesheet" href="styles.css">
     <title>Michael T's Portfolio | NetShadowM</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 <body>
     <header>
@@ -83,11 +89,86 @@
             </div>
         </section>
 
+        <section id="learning-progress" class="container">
+            <h2>Learning Progress</h2>
+            <canvas id="skillsChart"></canvas>
+        </section>
+        
+        <script>
+            var ctx = document.getElementById('skillsChart').getContext('2d');
+            var skillsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Linux', 'Networking', 'Smart Contracts'],
+                    datasets: [{
+                        label: 'Learning Progress',
+                        data: [70, 85, 60], // Your learning progress in %
+                        backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        </script>
+
         <section id="projects" class="container">
             <h2>Projects</h2>
-            <p>While I don't have active projects to showcase at the moment, I'm constantly working on personal projects to enhance my skills. Check back soon for updates!</p>
-            <div id="project-ideas"></div>
+            <table id="projectsTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Personal Cybersecurity Tool</td>
+                        <td>Ongoing</td>
+                        <td>Building a personal cybersecurity solution for network security.</td>
+                    </tr>
+                    <tr>
+                        <td>Blockchain Voting System</td>
+                        <td>Completed</td>
+                        <td>A blockchain-based voting system for secure elections.</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
+        
+        <script>
+            $(document).ready(function() {
+                $('#projectsTable').DataTable();
+            });
+        </script>
+
+
+
+<section id="project-slider" class="container">
+    <h2>Project Showcase</h2>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Project 1</div>
+            <div class="swiper-slide">Project 2</div>
+            <div class="swiper-slide">Project 3</div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+</script>
 
         <section id="socials" class="container">
             <h2>Connect with Me</h2>
