@@ -1,0 +1,6 @@
+[build]
+publish = "." # This should be the directory where your site files are located (adjust as needed)
+functions = "netlify/functions" # Path to my serverless functions
+
+[functions]
+node_bundler = "esbuild"
