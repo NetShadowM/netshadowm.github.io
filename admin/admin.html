@@ -33,7 +33,7 @@
 
     <script>
         const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your actual GitHub OAuth Client ID
-const redirectUri = `${window.location.origin}/admin/admin.html`; // Added '/' before 'admin/admin.html'
+const redirectUri = `${window.location.origin}/admin/admin.html`; 
 
 // Redirect to GitHub for login
 document.getElementById('login-btn').href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=read:user`;
