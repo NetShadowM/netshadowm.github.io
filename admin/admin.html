@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+</head>
+<body>
+    <h1>Admin Login</h1>
+    
+    <!-- GitHub OAuth Button -->
+    <a id="login-btn" href="#">Login with GitHub</a>
+
+    <script>
+        const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your GitHub OAuth app Client ID
+        const redirectUri = window.location.origin + '/admin.html';
+        
+        // Step 1: Redirect to GitHub login
+        document.getElementById('login-btn').href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=read:user`;
+        
+        // Step 2: After login, GitHub will redirect back with a code in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            // You should ideally handle the code on a backend to get the access token securely.
+            // But for demonstration purposes:
+            alert('Logged in with GitHub! You should now validate this login and proceed.');
+        }
+    </script>
+</body>
+</html>
