@@ -49,7 +49,7 @@ if (code) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ code }), // Send the OAuth code
     })
     .then(res => res.json())
     .then(data => {
@@ -80,6 +80,7 @@ if (code) {
         document.getElementById('login-error').textContent = 'Error during authentication process.';
     });
 }
+
 
 // Load existing content from localStorage
 document.addEventListener('DOMContentLoaded', () => {
