@@ -44,7 +44,7 @@ const code = urlParams.get('code');
 
 if (code) {
     // Send the OAuth code to your serverless function for token exchange
-    fetch('/.netlify/functions/github-auth', {
+    fetch('https://netshadowm.netlify.app/.netlify/functions/github-auth', {  // Correct the Netlify URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -81,6 +81,7 @@ if (code) {
         document.getElementById('login-error').textContent = 'Error during authentication process.';
     });
 }
+
 
 
 // Load existing content from localStorage
