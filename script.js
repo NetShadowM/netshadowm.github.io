@@ -32,14 +32,30 @@ document.addEventListener('click', (e) => {
     }
 });
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Populate skills
-    const programmingSkills = ['JavaScript', 'Python', 'Java', 'Solidity'];
-    const techSkills = ['Linux', 'Git', 'Network Security', 'Blockchain'];
+    // Fetch content from localStorage for dynamic updates
+    const aboutContent = localStorage.getItem('aboutContent') || 'Hello! I\'m Michael T, passionate about cybersecurity, blockchain, and game development.';
+    const programmingSkills = localStorage.getItem('programmingSkills') || 'JavaScript, Python, Java, Solidity';
+    const techSkills = localStorage.getItem('techSkills') || 'Linux, Git, Network Security, Blockchain';
+    const projectsData = localStorage.getItem('projectsData') || `
+        <tr>
+            <td>Personal Cybersecurity Tool</td>
+            <td>Ongoing</td>
+            <td>Building a personal cybersecurity solution for network security.</td>
+        </tr>
+        <tr>
+            <td>Blockchain Voting System</td>
+            <td>Completed</td>
+            <td>A blockchain-based voting system for secure elections.</td>
+        </tr>`;
 
-    function populateSkills(skillsArray, elementId) {
+    // Populate the "About Me" section
+    document.querySelector('#about .about-text').innerHTML = aboutContent;
+
+    // Populate skills dynamically
+    function populateSkills(skillsString, elementId) {
         const ul = document.getElementById(elementId);
+        const skillsArray = skillsString.split(',').map(skill => skill.trim());
         skillsArray.forEach(skill => {
             const li = document.createElement('li');
             li.textContent = skill;
@@ -49,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     populateSkills(programmingSkills, 'programming-skills');
     populateSkills(techSkills, 'tech-skills');
+
+    // Populate Projects
+    document.querySelector('#projectsTable tbody').innerHTML = projectsData;
 
     // Project ideas
     const projectIdeas = [
@@ -75,11 +94,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
-        
+
         // Prepare the message for WhatsApp
         const whatsappMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
         const whatsappLink = `https://wa.me/+2347041029093?text=${whatsappMessage}`;
-        
+
         // Prepare the message for email
         const emailSubject = encodeURIComponent("Portfolio Contact Form");
         const emailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
@@ -87,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Ask user which method they prefer
         const preferredMethod = confirm("Click OK to send via WhatsApp, or Cancel to send via Email");
-        
+
         if (preferredMethod) {
             window.open(whatsappLink, '_blank');
         } else {
@@ -98,15 +117,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Smooth scrolling for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
 
-        // Close the mobile menu after clicking a link
-        document.querySelector('nav').classList.remove('active');
+            // Close the mobile menu after clicking a link
+            document.querySelector('nav').classList.remove('active');
+        });
     });
-});
 });
