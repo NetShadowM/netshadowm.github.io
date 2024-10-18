@@ -2,6 +2,12 @@ const axios = require('axios');
 
 exports.handler = async (event) => {
 
+    // Add CORS headers
+    const headers = {
+    'Access-Control-Allow-Origin': 'https://netshadowm.github.io', // Allow your GitHub Pages domain
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST', // Allow POST requests
+    };
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
