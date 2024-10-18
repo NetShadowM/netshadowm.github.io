@@ -1,4 +1,5 @@
-const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your actual GitHub OAuth Client ID
+document.addEventListener('DOMContentLoaded', () =>  {
+    const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your actual GitHub OAuth Client ID
 const redirectUri = `${window.location.origin}/admin/admin.html`; 
 
 // Redirect to GitHub for login
@@ -48,7 +49,7 @@ if (code) {
         document.getElementById('login-error').textContent = 'Error during authentication process.';
     });
 }
-
+});
 
 
 // Load existing content from localStorage
