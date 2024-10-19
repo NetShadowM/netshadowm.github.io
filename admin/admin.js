@@ -10,6 +10,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const code = urlParams.get('code');
 
 if (code) {
+    console.log('OAuth code received:', code);  // Log received OAuth code
+
     // Send the OAuth code to your serverless function for token exchange
     fetch('https://netshadowm.netlify.app/.netlify/functions/github-auth', {  // Correct the Netlify URL
         method: 'POST',
@@ -21,6 +23,8 @@ if (code) {
     .then(res => res.json())
     .then(data => {
         if (data.access_token) {
+            console.log('Access token received:', data.access_token);  // Log access token
+
             // Fetch GitHub user data using the access token
             fetch('https://api.github.com/user', {
                 headers: {
@@ -29,21 +33,28 @@ if (code) {
             })
             .then(res => res.json())
             .then(user => {
+                console.log('User data received:', user);  // Log user data
+
                 // Check if the logged-in user is authorized (by GitHub username)
                 if (user.login === 'NetShadowM') { // Replace with your GitHub username
                     alert('Admin authenticated successfully!');
                     // Show the admin dashboard
                     document.getElementById('login-section').style.display = 'none';
                     document.getElementById('dashboard').style.display = 'block';
-                    redirectUri('edit-dashboard.html'); // Redirect to the dashboard page    
+                    
+                    // Save auth status to localStorage
                     localStorage.setItem('auth', 'true');
-                    console.log(localStorage.getItem('auth'));
+                    console.log('Auth status saved to localStorage:', localStorage.getItem('auth'));
+
+                    // Redirect to the edit-dashboard page
+                    window.location.href = 'edit-dashboard.html';  // Correct redirection
                 } else {
                     alert('Unauthorized user!');
                 }
             });
         } else {
             document.getElementById('login-error').textContent = 'GitHub authentication failed.';
+            console.error('GitHub authentication failed');
         }
     })
     .catch(error => {
