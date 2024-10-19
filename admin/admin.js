@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const devProtection = false;  // Set to true to block DevTools, false during development
+    const devProtection = true;  // Set to true to block DevTools, false during development
 
 if (devProtection) {
     // Disable right-click and common DevTools shortcuts
