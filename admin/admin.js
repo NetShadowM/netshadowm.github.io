@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () =>  {
-    const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your actual GitHub OAuth Client ID
+    const clientId = 'Iv23liQruJB6iss6Kgh5';
 const redirectUri = `${window.location.origin}/admin/admin.html`; 
 
 // Redirect to GitHub for login
@@ -35,7 +35,9 @@ if (code) {
                     // Show the admin dashboard
                     document.getElementById('login-section').style.display = 'none';
                     document.getElementById('dashboard').style.display = 'block';
+                    redirectUri('edit-dashboard.html'); // Redirect to the dashboard page    
                     localStorage.setItem('auth', 'true');
+                    console.log(localStorage.getItem('auth'));
                 } else {
                     alert('Unauthorized user!');
                 }
