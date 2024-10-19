@@ -38,9 +38,6 @@ if (code) {
                 // Check if the logged-in user is authorized (by GitHub username)
                 if (user.login === 'NetShadowM') { // Replace with your GitHub username
                     alert('Admin authenticated successfully!');
-                    // Show the admin dashboard
-                    document.getElementById('login-section').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
                     
                     // Save auth status to localStorage
                     localStorage.setItem('auth', 'true');
