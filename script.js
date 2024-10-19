@@ -1,17 +1,21 @@
-// Animate sections on scroll
-function animateSections() {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        if (sectionTop < windowHeight * 0.75) {
-            section.classList.add('visible', 'animated');
-        }
-    });
+// Debounce Function for Scroll Optimization
+function debounce(func, wait = 20, immediate = true) {
+    let timeout;
+    return function() {
+        const context = this, args = arguments;
+        const later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
 }
 
-window.addEventListener('scroll', animateSections);
-window.addEventListener('load', animateSections);
+// Animate sections on scroll
+window.addEventListener('scroll', debounce(animateSections));
 
 // Mobile menu toggle
 const mobileMenuToggle = document.createElement('div');
@@ -33,7 +37,7 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetch content from localStorage for dynamic updates
+    // Check if data exists in localStorage, otherwise use default values
     const aboutContent = localStorage.getItem('aboutContent') || 'Hello! I\'m Michael T, passionate about cybersecurity, blockchain, and game development.';
     const programmingSkills = localStorage.getItem('programmingSkills') || 'JavaScript, Python, Java, Solidity';
     const techSkills = localStorage.getItem('techSkills') || 'Linux, Git, Network Security, Blockchain';
@@ -49,13 +53,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>A blockchain-based voting system for secure elections.</td>
         </tr>`;
 
-    // Populate the "About Me" section
+    // Load "About Me" content
     document.querySelector('#about .about-text').innerHTML = aboutContent;
 
-    // Populate skills dynamically
+    // Load Skills
     function populateSkills(skillsString, elementId) {
         const ul = document.getElementById(elementId);
         const skillsArray = skillsString.split(',').map(skill => skill.trim());
+        ul.innerHTML = '';  // Clear previous content
         skillsArray.forEach(skill => {
             const li = document.createElement('li');
             li.textContent = skill;
@@ -66,66 +71,34 @@ document.addEventListener('DOMContentLoaded', function() {
     populateSkills(programmingSkills, 'programming-skills');
     populateSkills(techSkills, 'tech-skills');
 
-    // Populate Projects
+    // Load Projects
     document.querySelector('#projectsTable tbody').innerHTML = projectsData;
 
-    // Project ideas
-    const projectIdeas = [
-        'Personal Cybersecurity Tool',
-        'Blockchain-based Voting System',
-        'Secure File Sharing App',
-        'Crypto Portfolio Tracker'
-    ];
+    // Save "About Me" content to localStorage
+    function saveAboutContent(content) {
+        localStorage.setItem('aboutContent', content);
+    }
 
-    const projectSection = document.getElementById('project-ideas');
-    const ideaList = document.createElement('ul');
-    projectIdeas.forEach(idea => {
-        const li = document.createElement('li');
-        li.textContent = idea;
-        ideaList.appendChild(li);
-    });
-    projectSection.innerHTML = '<h3>Future Project Ideas:</h3>';
-    projectSection.appendChild(ideaList);
+    // Save Skills to localStorage
+    function saveSkills(programming, tech) {
+        localStorage.setItem('programmingSkills', programming);
+        localStorage.setItem('techSkills', tech);
+    }
 
-    // Form submission
-    const contactForm = document.getElementById('contact-form');
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+    // Save Projects to localStorage
+    function saveProjects(projects) {
+        localStorage.setItem('projectsData', projects);
+    }
 
-        // Prepare the message for WhatsApp
-        const whatsappMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
-        const whatsappLink = `https://wa.me/+2347041029093?text=${whatsappMessage}`;
-
-        // Prepare the message for email
-        const emailSubject = encodeURIComponent("Portfolio Contact Form");
-        const emailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
-        const emailLink = `mailto:NetShadowM@proton.me?subject=${emailSubject}&body=${emailBody}`;
-
-        // Ask user which method they prefer
-        const preferredMethod = confirm("Click OK to send via WhatsApp, or Cancel to send via Email");
-
-        if (preferredMethod) {
-            window.open(whatsappLink, '_blank');
-        } else {
-            window.location.href = emailLink;
-        }
-
-        contactForm.reset();
-    });
-
-    // Smooth scrolling for navigation
+    // Smooth scrolling for navigation (unchanged)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
-
-            // Close the mobile menu after clicking a link
             document.querySelector('nav').classList.remove('active');
         });
     });
 });
+

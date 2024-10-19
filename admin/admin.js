@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const devProtection = false;  // Set to true to block DevTools, false during development
+
+if (devProtection) {
+    // Disable right-click and common DevTools shortcuts
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        // F12 or Ctrl+Shift+I
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
+            e.preventDefault();
+            alert('Developer tools are disabled.');
+        }
+    });
+
+    // Detect DevTools
+    setInterval(() => {
+        const devTools = new Function('debugger');
+        try {
+            devTools();
+        } catch (e) {
+            console.warn('Developer tools are open!');
+            alert('Please close developer tools to continue.');
+        }
+    }, 1000); // Check every second
+}
+
+
     const clientId = 'Iv23liQruJB6iss6Kgh5'; // Replace with your actual GitHub OAuth Client ID
     const redirectUri = `${window.location.origin}/admin/admin.html`;
 
