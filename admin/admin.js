@@ -116,34 +116,12 @@ if (devProtection) {
     } else {
         console.log('User is not authenticated');
     }
-
-    // Load existing content from localStorage
-    const aboutContent = localStorage.getItem('aboutContent') || 'Default About Content';
-    const projectContent = localStorage.getItem('projectContent') || 'Default Project Data';
-
-    const aboutText = document.getElementById('about-text');
-    const projectData = document.getElementById('project-data');
-
-    if (aboutText) aboutText.value = aboutContent;
-    if (projectData) projectData.value = projectContent;
-
-    // Save updated About Me content
-    const saveAboutBtn = document.getElementById('save-about');
-    if (saveAboutBtn) {
-        saveAboutBtn.addEventListener('click', () => {
-            const aboutText = document.getElementById('about-text').value;
-            localStorage.setItem('aboutContent', aboutText);
-            alert('About Me updated!');
-        });
-    }
-
-    // Save updated Projects content
-    const saveProjectsBtn = document.getElementById('save-projects');
-    if (saveProjectsBtn) {
-        saveProjectsBtn.addEventListener('click', () => {
-            const projectText = document.getElementById('project-data').value;
-            localStorage.setItem('projectContent', projectText);
-            alert('Projects updated!');
-        });
-    }
 });
+
+function dashboard(){
+    window.location.href = "edit-dashboard.html";
+}
+function logOut() {
+    localStorage.removeItem('auth');
+    window.location.href = "admin.html";
+}
