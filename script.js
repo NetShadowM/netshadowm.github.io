@@ -39,24 +39,40 @@ const setupMobileMenu = () => {
 const loadData = () => {
     try {
         const data = JSON.parse(localStorage.getItem('portfolioData')) || {};
-        
-        document.querySelector('#about .about-text').innerHTML = data.aboutMe?.content || '';
+
+        // Check if the #about .about-text element exists before setting its value
+        const aboutTextElement = document.querySelector('#about .about-text');
+        if (aboutTextElement) {
+            aboutTextElement.innerHTML = data.aboutMe?.content || 'No About Me content available.';
+        }
+
         populateSkills(data.skills?.programmingSkills || [], 'programming-skills');
         populateSkills(data.skills?.techSkills || [], 'tech-skills');
         populateProjectsTable(data.projects || []);
         loadProjectShowcase(data.projects || []);
         updateLearningChart(data.learningProgress || {});
-        
+
+        // Check if the resume links exist before updating them
         const resumeLinks = document.querySelectorAll('.resume-buttons a');
-        resumeLinks.forEach(link => link.href = data.resume || '#');
+        if (resumeLinks.length > 0) {
+            resumeLinks.forEach(link => link.href = data.resume || '#');
+        }
 
     } catch (error) {
         console.error("Error loading data:", error);
-        document.getElementById('loading-error').textContent = 'Failed to load data. Please try again later.';
+        const loadingErrorElement = document.getElementById('loading-error');
+        if (loadingErrorElement) {
+            loadingErrorElement.textContent = 'Failed to load data. Please try again later.';
+        }
     } finally {
-        document.getElementById('loading-indicator').style.display = 'none';
+        // Check if the loading indicator exists before hiding it
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
     }
 };
+
 
 const populateSkills = (skillsArray, elementId) => {
     const ul = document.getElementById(elementId);
@@ -94,30 +110,27 @@ const loadProjectShowcase = (projects) => {
         </div>
     `).join('');
 
-    // Initialize Swiper after DOM content is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        new Swiper('.swiper-container', {
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+    new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        slidesPerView: 1,
+        spaceBetween: 10,
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10
             },
-            slidesPerView: 1,
-            spaceBetween: 10,
-            breakpoints: {
-                320: {
-                    slidesPerView: 1,
-                    spaceBetween: 10
-                },
-                480: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                },
-                640: {
-                    slidesPerView: 3,
-                    spaceBetween: 30
-                }
+            480: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            },
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 30
             }
-        });
+        }
     });
 };
 
