@@ -4,36 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Dashboard</title>
-    <link rel="stylesheet" href="edit-dashboard.css">
-    <script src="edit-dashboard.js"></script>
+    <link rel="stylesheet" href="edit-dashboard-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
-        <header>
-            <h1>Edit Dashboard</h1>
-        </header>
-
-        <!-- Edit About Me Section -->
-        <section id="edit-about">
-            <h2>Edit About Me</h2>
-            <textarea id="about-text"></textarea>
-            <button id="save-about">Save About Me</button>
-        </section>
-
-        <!-- Edit Skills Section -->
-        <section id="edit-skills">
-            <h2>Edit Skills</h2>
-            <input type="text" id="programming-skills" placeholder="Enter Programming Skills" title="Programming Skills">
-            <input type="text" id="tech-skills" placeholder="Enter Technologies and Tools" title="Technologies and tools">
-            <button id="save-skills">Save Skills</button>
-        </section>
-
-        <!-- Edit Projects Section -->
-        <section id="edit-projects">
-            <h2>Edit Projects</h2>
-            <textarea id="projects-data"></textarea>
-            <button id="save-projects">Save Projects</button>
-        </section>
+    <div class="container">
+        <h1>Edit Dashboard</h1>
+        <div id="editForms">
+            <!-- Forms will be dynamically generated here -->
+        </div>
+        <button id="addProgress" class="btn-add">Add New Progress</button>
     </div>
+    <script src="edit-dashboard.js"></script>
 </body>
 </html>

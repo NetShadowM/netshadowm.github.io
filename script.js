@@ -1,166 +1,133 @@
-// Debounce Function for Scroll Optimization
-function debounce(func, wait = 20, immediate = true) {
+// Utility Functions
+const debounce = (func, wait = 20) => {
     let timeout;
-    return function() {
-        const context = this, args = arguments;
-        const later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
+    return function(...args) {
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
-}
+};
 
-// Define animateSections function
-function animateSections() {
+// DOM Manipulation Functions
+const animateSections = () => {
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        if (sectionTop < windowHeight * 0.75) {
+        if (sectionTop < window.innerHeight * 0.75) {
             section.classList.add('visible', 'animated');
         }
     });
-}
+};
 
-// Add the scroll event listener with debounce
-window.addEventListener('scroll', debounce(animateSections));
-// Mobile menu toggle
-const mobileMenuToggle = document.createElement('div');
-mobileMenuToggle.className = 'mobile-menu-toggle';
-mobileMenuToggle.innerHTML = '☰';
-document.querySelector('header .container').prepend(mobileMenuToggle);
+const setupMobileMenu = () => {
+    const mobileMenuToggle = document.createElement('div');
+    mobileMenuToggle.className = 'mobile-menu-toggle';
+    mobileMenuToggle.innerHTML = '☰';
+    document.querySelector('header .container').prepend(mobileMenuToggle);
 
-mobileMenuToggle.addEventListener('click', () => {
-    const nav = document.querySelector('nav');
-    nav.classList.toggle('active');
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    const nav = document.querySelector('nav');
-    if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-toggle')) {
-        nav.classList.remove('active');
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    const devProtection = false;  // Set to true to block DevTools, false during development
-
-if (devProtection) {
-    // Disable right-click and common DevTools shortcuts
-    document.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
+    mobileMenuToggle.addEventListener('click', () => {
+        document.querySelector('nav').classList.toggle('active');
     });
 
-    document.addEventListener('keydown', (e) => {
-        // F12 or Ctrl+Shift+I
-        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
-            e.preventDefault();
-            alert('Developer tools are disabled.');
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-toggle')) {
+            document.querySelector('nav').classList.remove('active');
         }
     });
+};
 
-    // Detect DevTools
-    setInterval(() => {
-        const devTools = new Function('debugger');
-        try {
-            devTools();
-        } catch (e) {
-            console.warn('Developer tools are open!');
-            alert('Please close developer tools to continue.');
-        }
-    }, 1000); // Check every second
-}
-// Function to fetch JSON data and load it into the webpage
-async function loadData() {
+// Data Loading and Population Functions
+const loadData = async () => {
     try {
         const response = await fetch('assets/storage/json/data.json');
         const data = await response.json();
         
-        // Populate About Me
         document.querySelector('#about .about-text').innerHTML = data.aboutMe.content;
-
-        // Populate Programming and Tech Skills
         populateSkills(data.skills.programmingSkills, 'programming-skills');
         populateSkills(data.skills.techSkills, 'tech-skills');
-
-        // Populate Projects (Table)
         populateProjectsTable(data.projects);
-
-        // Populate Project Showcase (Swiper)
         loadProjectShowcase(data.projects);
-
-        // Populate Learning Progress Chart
         updateLearningChart(data.learningProgress);
-
-        // Populate Resume link
-        document.querySelector('.resume-buttons .view-resume').setAttribute('href', data.resume);
-        document.querySelector('.resume-buttons .download-resume').setAttribute('href', data.resume);
+        
+        const resumeLinks = document.querySelectorAll('.resume-buttons a');
+        resumeLinks.forEach(link => link.href = data.resume);
 
     } catch (error) {
         console.error("Error loading JSON data:", error);
+        document.getElementById('loading-error').textContent = 'Failed to load data. Please try again later.';
+    } finally {
+        document.getElementById('loading-indicator').style.display = 'none';
     }
-}
+};
 
-// Populate Projects Table with clickable rows
-function populateProjectsTable(projects) {
+const populateSkills = (skillsArray, elementId) => {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = skillsArray.map(skill => `<li>${skill}</li>`).join('');
+};
+
+const populateProjectsTable = (projects) => {
     const projectsTable = document.querySelector('#projectsTable tbody');
-    projectsTable.innerHTML = ''; // Clear existing rows
-
-    projects.forEach(project => {
-        const row = `<tr class="clickable-row" data-project="${project.name}">
+    projectsTable.innerHTML = projects.map(project => `
+        <tr class="clickable-row" data-project="${project.name}">
             <td>${project.name}</td>
             <td>${project.status}</td>
             <td>${project.description}</td>
-        </tr>`;
-        projectsTable.innerHTML += row;
-    });
+        </tr>
+    `).join('');
 
-    // Add event listeners to each row
-    const rows = document.querySelectorAll('.clickable-row');
-    rows.forEach(row => {
+    document.querySelectorAll('.clickable-row').forEach(row => {
         row.addEventListener('click', function() {
             const projectName = encodeURIComponent(this.getAttribute('data-project'));
             window.location.href = `assets/pages/projects-display.html?project=${projectName}`;
         });
     });
 
-    // Initialize DataTables
     $('#projectsTable').DataTable();
-}
+};
 
-// Load and populate the Project Showcase (Swiper Carousel)
-function loadProjectShowcase(projects) {
+const loadProjectShowcase = (projects) => {
     const swiperWrapper = document.getElementById('project-showcase-wrapper');
-    swiperWrapper.innerHTML = ''; // Clear existing slides
+    swiperWrapper.innerHTML = projects.map(project => `
+        <div class="swiper-slide">
+            <a href="assets/pages/projects-display.html?project=${encodeURIComponent(project.name)}">
+                <img src="${project.thumbnail}" alt="${project.name}">
+                <h3>${project.name}</h3>
+            </a>
+        </div>
+    `).join('');
 
-    projects.forEach(project => {
-        const slide = `
-            <div class="swiper-slide">
-                <a href="assets/pages/projects-display.html?project=${encodeURIComponent(project.name)}">
-                    <img src="${project.thumbnail}" alt="${project.name}">
-                    <h3>${project.name}</h3>
-                </a>
-            </div>`;
-        swiperWrapper.innerHTML += slide;
+    // Initialize Swiper after DOM content is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            // Add more options as needed
+            slidesPerView: 1,
+            spaceBetween: 10,
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                // when window width is >= 480px
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                }
+            }
+        });
     });
+};
 
-    // Initialize Swiper after populating
-    var swiper = new Swiper('.swiper-container', {
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-}
-
-// Function to update the Learning Progress chart
-function updateLearningChart(progressData) {
+const updateLearningChart = (progressData) => {
     const ctx = document.getElementById('skillsChart').getContext('2d');
     new Chart(ctx, {
         type: 'bar',
@@ -179,21 +146,34 @@ function updateLearningChart(progressData) {
             }
         }
     });
-}
+};
 
-// Helper function to populate skills in the skills list
-function populateSkills(skillsArray, elementId) {
-    const ul = document.getElementById(elementId);
-    ul.innerHTML = '';  // Clear existing content
-    skillsArray.forEach(skill => {
-        const li = document.createElement('li');
-        li.textContent = skill;
-        ul.appendChild(li);
-    });
-}
-
+// Event Listeners and Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    setupMobileMenu();
+    loadData();
+    window.addEventListener('scroll', debounce(animateSections));
 });
 
-// Load data when the page is ready
-document.addEventListener('DOMContentLoaded', loadData);
+// Developer Tools Protection (optional)
+const enableDevProtection = () => {
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
+            e.preventDefault();
+            alert('Developer tools are disabled.');
+        }
+    });
+    setInterval(() => {
+        const devTools = new Function('debugger');
+        try {
+            devTools();
+        } catch (e) {
+            console.warn('Developer tools are open!');
+            alert('Please close developer tools to continue.');
+        }
+    }, 1000);
+};
 
+// Uncomment the line below to enable developer tools protection
+// enableDevProtection();
