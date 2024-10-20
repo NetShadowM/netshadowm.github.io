@@ -36,23 +36,22 @@ const setupMobileMenu = () => {
 };
 
 // Data Loading and Population Functions
-const loadData = async () => {
+const loadData = () => {
     try {
-        const response = await fetch('assets/storage/json/data.json');
-        const data = await response.json();
+        const data = JSON.parse(localStorage.getItem('portfolioData')) || {};
         
-        document.querySelector('#about .about-text').innerHTML = data.aboutMe.content;
-        populateSkills(data.skills.programmingSkills, 'programming-skills');
-        populateSkills(data.skills.techSkills, 'tech-skills');
-        populateProjectsTable(data.projects);
-        loadProjectShowcase(data.projects);
-        updateLearningChart(data.learningProgress);
+        document.querySelector('#about .about-text').innerHTML = data.aboutMe?.content || '';
+        populateSkills(data.skills?.programmingSkills || [], 'programming-skills');
+        populateSkills(data.skills?.techSkills || [], 'tech-skills');
+        populateProjectsTable(data.projects || []);
+        loadProjectShowcase(data.projects || []);
+        updateLearningChart(data.learningProgress || {});
         
         const resumeLinks = document.querySelectorAll('.resume-buttons a');
-        resumeLinks.forEach(link => link.href = data.resume);
+        resumeLinks.forEach(link => link.href = data.resume || '#');
 
     } catch (error) {
-        console.error("Error loading JSON data:", error);
+        console.error("Error loading data:", error);
         document.getElementById('loading-error').textContent = 'Failed to load data. Please try again later.';
     } finally {
         document.getElementById('loading-indicator').style.display = 'none';
@@ -102,22 +101,17 @@ const loadProjectShowcase = (projects) => {
                 el: '.swiper-pagination',
                 clickable: true,
             },
-            // Add more options as needed
             slidesPerView: 1,
             spaceBetween: 10,
-            // Responsive breakpoints
             breakpoints: {
-                // when window width is >= 320px
                 320: {
                     slidesPerView: 1,
                     spaceBetween: 10
                 },
-                // when window width is >= 480px
                 480: {
                     slidesPerView: 2,
                     spaceBetween: 20
                 },
-                // when window width is >= 640px
                 640: {
                     slidesPerView: 3,
                     spaceBetween: 30
@@ -135,7 +129,7 @@ const updateLearningChart = (progressData) => {
             labels: ['Linux', 'Networking', 'Smart Contracts'],
             datasets: [{
                 label: 'Learning Progress',
-                data: [progressData.Linux, progressData.Networking, progressData.SmartContracts],
+                data: [progressData.Linux || 0, progressData.Networking || 0, progressData.SmartContracts || 0],
                 backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
                 borderWidth: 1
             }]
