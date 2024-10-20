@@ -20,11 +20,23 @@
         "thumbnail": "assets/images/blockchain-voting-system.png"
       }
     ],
-    "learningProgress": {
-      "Linux": 70,
-      "Networking": 85,
-      "Smart Contracts": 60
+    "learningProgress": [
+    {
+      "title": "Linux",
+      "description": "Learning Linux administration",
+      "percentage": 70
     },
+    {
+      "title": "Networking",
+      "description": "Improving networking skills",
+      "percentage": 85
+    },
+    {
+      "title": "Smart Contracts",
+      "description": "Developing smart contracts",
+      "percentage": 60
+    }
+  ],
     "resume": "assets/resume/resume.pdf"
   }
   
