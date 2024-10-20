@@ -6,35 +6,22 @@
     <meta name="description" content="Michael T's Portfolio - Aspiring Cybersecurity Specialist and Blockchain Developer">
     <link rel="stylesheet" href="styles.css">
     <title>Michael T's Portfolio | NetShadowM</title>
-    
+
     <!-- External CSS Libraries -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
     <link rel="icon" href="assets/images/icons8-router-100.png" type="image/x-icon">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Michael T's Portfolio | NetShadowM">
-    <meta property="og:description" content="Aspiring Cybersecurity Specialist and Blockchain Developer.">
-    <meta property="og:image" content="assets/images/icons8-router-100.png">
-    <meta property="og:url" content="https://netshadowm.github.io">
-    <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.datatables.net https://unpkg.com;
-    style-src 'self' https://cdn.jsdelivr.net https://cdn.datatables.net https://unpkg.com https://fonts.googleapis.com;
-    font-src 'self' https://fonts.gstatic.com data:;
-    connect-src 'self';
-    img-src 'self' data:;
-    object-src 'none';
-    base-uri 'self';">
+    <!-- External JS Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
-            <a href="admin/admin.html" class="head-boi">Michael T's Portfolio</a>
+            <h1>Michael T's Portfolio</h1>
             <p class="tagline">Aspiring Cybersecurity Specialist & Blockchain Developer</p>
             <nav>
                 <ul>
@@ -51,19 +38,127 @@
     </header>
 
     <main>
-        <!-- Sections like About, Skills, Resume, Learning Progress, Projects, etc. -->
+        <section id="about" class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="assets/images/icons8-router-100.png" alt="Michael T" class="profile-picture" loading="lazy">
+                <div class="about-text">
+                    <p>Hello! I'm Michael T, also known as NetShadowM. I'm passionate about cybersecurity, blockchain technology, and game development.</p>
+                    <ul>
+                        <li><strong>Education:</strong> Mathematical Science, University of Lagos, Nigeria</li>
+                        <li><strong>Career Goals:</strong> Cybersecurity Specialist and Blockchain Developer</li>
+                        <li><strong>Experience:</strong> Game development and Android app creation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <ul>
+                        <li>JavaScript</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>Solidity</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <ul>
+                        <li>Linux</li>
+                        <li>Git</li>
+                        <li>Network Security</li>
+                        <li>Blockchain</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="resume" class="container">
+            <h2>Resume</h2>
+            <p>View or download my comprehensive CV to learn more about my experiences and qualifications:</p>
+            <div class="resume-buttons">
+                <a href="assets/resume/resume.pdf" target="_blank" class="button">View CV</a>
+                <a href="assets/resume/resume.pdf" download class="button">Download CV</a>
+            </div>
+        </section>
+
+        <section id="learning" class="container">
+            <h2>Current Learning Focus</h2>
+            <div class="learning-topics">
+                <div class="topic">
+                    <h3>Linux</h3>
+                    <p>Mastering command-line operations and system administration.</p>
+                </div>
+                <div class="topic">
+                    <h3>Networking</h3>
+                    <p>Understanding protocols, network security, and infrastructure design.</p>
+                </div>
+                <div class="topic">
+                    <h3>Smart Contracts</h3>
+                    <p>Developing and auditing blockchain-based smart contracts.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h2>Projects</h2>
+            <table id="projectsTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Personal Cybersecurity Tool</td>
+                        <td>Ongoing</td>
+                        <td>Building a personal cybersecurity solution for network security.</td>
+                    </tr>
+                    <tr>
+                        <td>Blockchain Voting System</td>
+                        <td>Completed</td>
+                        <td>A blockchain-based voting system for secure elections.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
         <section id="project-slider" class="container">
             <h2>Project Showcase</h2>
             <div class="swiper-container">
-                <div class="swiper-wrapper" id="project-showcase-wrapper">
-                    <!-- Dynamic Project Slides will go here -->
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">Project 1</div>
+                    <div class="swiper-slide">Project 2</div>
+                    <div class="swiper-slide">Project 3</div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
         </section>
 
-        <!-- Socials and Contact Sections -->
+        <section id="socials" class="container">
+            <h2>Connect with Me</h2>
+            <ul class="social-links">
+                <li><a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://twitter.com/netshadowm" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                <li><a href="https://github.com/netshadowm" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+        </section>
+
+        <section id="contact" class="container">
+            <h2>Get in Touch</h2>
+            <form id="contact-form">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="button">Send Message</button>
+            </form>
+        </section>
     </main>
 
     <footer>
@@ -72,13 +167,7 @@
         </div>
     </footer>
 
-    <!-- External JS Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Your external JS file -->
+    <!-- JS for External Libraries -->
     <script src="script.js"></script>
 </body>
 </html>

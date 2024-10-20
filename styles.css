@@ -3,6 +3,7 @@
     --secondary-color: #333333;
     --text-color: #FFFFFF;
     --background-color: #F5F5F5;
+    --accent-color: #45a049; /* Slightly darker green for hover effects */
 }
 
 body {
@@ -21,16 +22,14 @@ body {
     padding: 0 20px;
 }
 
-.head-boi{
+.head-boi {
     text-decoration: none;
-    text-rendering: auto;
-    text-decoration: solid;
     text-transform: uppercase;
     font-size: 2.25em;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Updated CSS for the header and nav */
+/* Header & Navigation */
 header {
     background-color: rgba(76, 175, 80, 0.8);
     padding: 20px 0;
@@ -40,7 +39,6 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
-    height: 60px;
     display: flex;
     align-items: center;
 }
@@ -54,7 +52,7 @@ header .container {
 nav {
     display: none;
     position: absolute;
-    top: 60px; /* Just below the header */
+    top: 60px;
     right: 0;
     background-color: var(--primary-color);
     width: 100%;
@@ -84,26 +82,21 @@ nav ul li {
 }
 
 @media (max-width: 768px) {
-    nav {
-        display: none;
-        flex-direction: column;
+    .mobile-menu-toggle {
+        display: block;
     }
 
     nav ul {
         flex-direction: column;
         align-items: center;
     }
-
-    .mobile-menu-toggle {
-        display: block;
-    }
 }
 
 main {
-    padding-top: 80px; /* Adjusted to avoid being covered by the header */
+    padding-top: 80px;
 }
 
-
+/* Tagline */
 .tagline {
     font-style: italic;
     color: var(--text-color);
@@ -129,6 +122,7 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* About Me */
 .about-content {
     display: flex;
     align-items: center;
@@ -143,6 +137,14 @@ h2 {
     border: 3px solid var(--primary-color);
 }
 
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Skills */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -157,6 +159,7 @@ h2 {
     backdrop-filter: blur(5px);
 }
 
+/* Resume */
 .resume-buttons {
     display: flex;
     gap: 20px;
@@ -174,9 +177,10 @@ h2 {
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: var(--accent-color);
 }
 
+/* Learning Topics */
 .learning-topics {
     display: flex;
     flex-wrap: wrap;
@@ -193,6 +197,17 @@ h2 {
     backdrop-filter: blur(5px);
 }
 
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .learning-topics {
+        flex-direction: column;
+    }
+}
+
+/* Social Links */
 .social-links {
     display: flex;
     justify-content: center;
@@ -211,6 +226,7 @@ h2 {
     color: var(--secondary-color);
 }
 
+/* Contact Form */
 #contact-form {
     display: grid;
     gap: 20px;
@@ -226,6 +242,7 @@ h2 {
     color: var(--secondary-color);
 }
 
+/* Footer */
 footer {
     background-color: var(--primary-color);
     color: var(--text-color);
@@ -234,6 +251,7 @@ footer {
     margin-top: 50px;
 }
 
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     header .container {
         flex-direction: column;
@@ -243,26 +261,8 @@ footer {
         margin-top: 20px;
     }
 
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
     nav ul li {
         margin: 10px 0;
-    }
-
-    .about-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .learning-topics {
-        flex-direction: column;
     }
 }
 
