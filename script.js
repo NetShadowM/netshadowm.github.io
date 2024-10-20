@@ -14,7 +14,19 @@ function debounce(func, wait = 20, immediate = true) {
     };
 }
 
-// Animate sections on scroll
+// Define animateSections function
+function animateSections() {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (sectionTop < windowHeight * 0.75) {
+            section.classList.add('visible', 'animated');
+        }
+    });
+}
+
+// Add the scroll event listener with debounce
 window.addEventListener('scroll', debounce(animateSections));
 
 // Mobile menu toggle
@@ -128,5 +140,35 @@ if (devProtection) {
             document.querySelector('nav').classList.remove('active');
         });
     });
+
+    var ctx = document.getElementById('skillsChart').getContext('2d');
+            var skillsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Linux', 'Networking', 'Smart Contracts'],
+                    datasets: [{
+                        label: 'Learning Progress',
+                        data: [70, 85, 60], // Your learning progress in %
+                        backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            $(document).ready(function() {
+                $('#projectsTable').DataTable();
+            });
+
+            var swiper = new Swiper('.swiper-container', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
 });
 

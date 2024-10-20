@@ -18,6 +18,16 @@
     <meta property="og:image" content="assets\images\icons8-router-100.png">
     <meta property="og:url" content="https://netshadowm.github.io">
     <meta name="twitter:card" content="summary_large_image">
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self'; 
+    script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.datatables.net;
+    style-src 'self' https://cdn.jsdelivr.net https://cdn.datatables.net https://unpkg.com;
+    font-src 'self' data: https://fonts.gstatic.com;
+    connect-src 'self';
+    img-src 'self' data: https://*;
+    object-src 'none'; 
+    base-uri 'self';">
+
 
 
 </head>
@@ -102,27 +112,6 @@
             <h2>Learning Progress</h2>
             <canvas id="skillsChart"></canvas>
         </section>
-        
-        <script>
-            var ctx = document.getElementById('skillsChart').getContext('2d');
-            var skillsChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Linux', 'Networking', 'Smart Contracts'],
-                    datasets: [{
-                        label: 'Learning Progress',
-                        data: [70, 85, 60], // Your learning progress in %
-                        backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-        </script>
 
         <section id="projects" class="container">
             <h2>Projects</h2>
@@ -148,12 +137,6 @@
                 </tbody>
             </table>
         </section>
-        
-        <script>
-            $(document).ready(function() {
-                $('#projectsTable').DataTable();
-            });
-        </script>
 
 
 
@@ -170,14 +153,6 @@
     </div>
 </section>
 
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-</script>
 
         <section id="socials" class="container">
             <h2>Connect with Me</h2>
