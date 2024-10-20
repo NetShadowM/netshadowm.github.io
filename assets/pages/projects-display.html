@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <main>
+        <section id="project-details" class="container">
+            <h2 id="project-name">Project Name</h2>
+            <img id="project-thumbnail" src="" alt="Project Thumbnail">
+            <p id="project-description">Project Description</p>
+        </section>
+    </main>
+
+    <script src="../../script.js"></script>
+    <script>
+        // Parse project from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectName = urlParams.get('project');
+
+        // Load project data from JSON
+        async function loadProjectDetails() {
+            try {
+                const response = await fetch('../../assets/storage/json/data.json');
+                const data = await response.json();
+
+                const project = data.projects.find(p => p.name === projectName);
+
+                if (project) {
+                    document.getElementById('project-name').textContent = project.name;
+                    document.getElementById('project-thumbnail').src = project.thumbnail;
+                    document.getElementById('project-description').textContent = project.description;
+                } else {
+                    document.getElementById('project-name').textContent = 'Project not found';
+                }
+            } catch (error) {
+                console.error('Error loading project details:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProjectDetails);
+    </script>
+</body>
+</html>

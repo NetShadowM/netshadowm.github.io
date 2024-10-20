@@ -76,98 +76,124 @@ if (devProtection) {
         }
     }, 1000); // Check every second
 }
-    // Check if data exists in localStorage, otherwise use default values
-    const aboutContent = localStorage.getItem('aboutContent') || 'Hello! I\'m Michael T, passionate about cybersecurity, blockchain, and game development.';
-    const programmingSkills = localStorage.getItem('programmingSkills') || 'JavaScript, Python, Java, Solidity';
-    const techSkills = localStorage.getItem('techSkills') || 'Linux, Git, Network Security, Blockchain';
-    const projectsData = localStorage.getItem('projectsData') || `
-        <tr>
-            <td>Personal Cybersecurity Tool</td>
-            <td>Ongoing</td>
-            <td>Building a personal cybersecurity solution for network security.</td>
-        </tr>
-        <tr>
-            <td>Blockchain Voting System</td>
-            <td>Completed</td>
-            <td>A blockchain-based voting system for secure elections.</td>
+// Function to fetch JSON data and load it into the webpage
+async function loadData() {
+    try {
+        const response = await fetch('assets/storage/json/data.json');
+        const data = await response.json();
+        
+        // Populate About Me
+        document.querySelector('#about .about-text').innerHTML = data.aboutMe.content;
+
+        // Populate Programming and Tech Skills
+        populateSkills(data.skills.programmingSkills, 'programming-skills');
+        populateSkills(data.skills.techSkills, 'tech-skills');
+
+        // Populate Projects (Table)
+        populateProjectsTable(data.projects);
+
+        // Populate Project Showcase (Swiper)
+        loadProjectShowcase(data.projects);
+
+        // Populate Learning Progress Chart
+        updateLearningChart(data.learningProgress);
+
+        // Populate Resume link
+        document.querySelector('.resume-buttons .view-resume').setAttribute('href', data.resume);
+        document.querySelector('.resume-buttons .download-resume').setAttribute('href', data.resume);
+
+    } catch (error) {
+        console.error("Error loading JSON data:", error);
+    }
+}
+
+// Populate Projects Table with clickable rows
+function populateProjectsTable(projects) {
+    const projectsTable = document.querySelector('#projectsTable tbody');
+    projectsTable.innerHTML = ''; // Clear existing rows
+
+    projects.forEach(project => {
+        const row = `<tr class="clickable-row" data-project="${project.name}">
+            <td>${project.name}</td>
+            <td>${project.status}</td>
+            <td>${project.description}</td>
         </tr>`;
+        projectsTable.innerHTML += row;
+    });
 
-    // Load "About Me" content
-    document.querySelector('#about .about-text').innerHTML = aboutContent;
-
-    // Load Skills
-    function populateSkills(skillsString, elementId) {
-        const ul = document.getElementById(elementId);
-        const skillsArray = skillsString.split(',').map(skill => skill.trim());
-        ul.innerHTML = '';  // Clear previous content
-        skillsArray.forEach(skill => {
-            const li = document.createElement('li');
-            li.textContent = skill;
-            ul.appendChild(li);
-        });
-    }
-
-    populateSkills(programmingSkills, 'programming-skills');
-    populateSkills(techSkills, 'tech-skills');
-
-    // Load Projects
-    document.querySelector('#projectsTable tbody').innerHTML = projectsData;
-
-    // Save "About Me" content to localStorage
-    function saveAboutContent(content) {
-        localStorage.setItem('aboutContent', content);
-    }
-
-    // Save Skills to localStorage
-    function saveSkills(programming, tech) {
-        localStorage.setItem('programmingSkills', programming);
-        localStorage.setItem('techSkills', tech);
-    }
-
-    // Save Projects to localStorage
-    function saveProjects(projects) {
-        localStorage.setItem('projectsData', projects);
-    }
-
-    // Smooth scrolling for navigation (unchanged)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-            document.querySelector('nav').classList.remove('active');
+    // Add event listeners to each row
+    const rows = document.querySelectorAll('.clickable-row');
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            const projectName = encodeURIComponent(this.getAttribute('data-project'));
+            window.location.href = `assets/pages/projects-display.html?project=${projectName}`;
         });
     });
 
-    var ctx = document.getElementById('skillsChart').getContext('2d');
-            var skillsChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Linux', 'Networking', 'Smart Contracts'],
-                    datasets: [{
-                        label: 'Learning Progress',
-                        data: [70, 85, 60], // Your learning progress in %
-                        backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
+    // Initialize DataTables
+    $('#projectsTable').DataTable();
+}
 
-            $(document).ready(function() {
-                $('#projectsTable').DataTable();
-            });
+// Load and populate the Project Showcase (Swiper Carousel)
+function loadProjectShowcase(projects) {
+    const swiperWrapper = document.getElementById('project-showcase-wrapper');
+    swiperWrapper.innerHTML = ''; // Clear existing slides
 
-            var swiper = new Swiper('.swiper-container', {
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-            });
+    projects.forEach(project => {
+        const slide = `
+            <div class="swiper-slide">
+                <a href="assets/pages/projects-display.html?project=${encodeURIComponent(project.name)}">
+                    <img src="${project.thumbnail}" alt="${project.name}">
+                    <h3>${project.name}</h3>
+                </a>
+            </div>`;
+        swiperWrapper.innerHTML += slide;
+    });
+
+    // Initialize Swiper after populating
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+}
+
+// Function to update the Learning Progress chart
+function updateLearningChart(progressData) {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Linux', 'Networking', 'Smart Contracts'],
+            datasets: [{
+                label: 'Learning Progress',
+                data: [progressData.Linux, progressData.Networking, progressData.SmartContracts],
+                backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(54, 162, 235, 0.6)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// Helper function to populate skills in the skills list
+function populateSkills(skillsArray, elementId) {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = '';  // Clear existing content
+    skillsArray.forEach(skill => {
+        const li = document.createElement('li');
+        li.textContent = skill;
+        ul.appendChild(li);
+    });
+}
+
 });
+
+// Load data when the page is ready
+document.addEventListener('DOMContentLoaded', loadData);
 

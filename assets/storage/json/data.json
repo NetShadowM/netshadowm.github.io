@@ -1,0 +1,30 @@
+{
+    "aboutMe": {
+      "content": "Hello! I'm Michael T, passionate about cybersecurity, blockchain, and game development."
+    },
+    "skills": {
+      "programmingSkills": ["JavaScript", "Python", "Java", "Solidity"],
+      "techSkills": ["Linux", "Git", "Network Security", "Blockchain"]
+    },
+    "projects": [
+      {
+        "name": "Personal Cybersecurity Tool",
+        "status": "Ongoing",
+        "description": "Building a personal cybersecurity solution for network security.",
+        "thumbnail": "assets/images/cybersecurity-tool.png"
+      },
+      {
+        "name": "Blockchain Voting System",
+        "status": "Completed",
+        "description": "A blockchain-based voting system for secure elections.",
+        "thumbnail": "assets/images/blockchain-voting-system.png"
+      }
+    ],
+    "learningProgress": {
+      "Linux": 70,
+      "Networking": 85,
+      "Smart Contracts": 60
+    },
+    "resume": "assets/resume/resume.pdf"
+  }
+  

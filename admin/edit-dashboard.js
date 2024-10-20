@@ -4,50 +4,49 @@ if (localStorage.getItem('auth') !== 'true') {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Load existing content from localStorage to allow editing
-    const aboutContent = localStorage.getItem('aboutContent') || 'Hello! I\'m Michael T, passionate about cybersecurity, blockchain, and game development.';
-    const programmingSkills = localStorage.getItem('programmingSkills') || 'JavaScript, Python, Java, Solidity';
-    const techSkills = localStorage.getItem('techSkills') || 'Linux, Git, Network Security, Blockchain';
-    const projectsData = localStorage.getItem('projectsData') || `
-        <tr>
-            <td>Personal Cybersecurity Tool</td>
-            <td>Ongoing</td>
-            <td>Building a personal cybersecurity solution for network security.</td>
-        </tr>
-        <tr>
-            <td>Blockchain Voting System</td>
-            <td>Completed</td>
-            <td>A blockchain-based voting system for secure elections.</td>
-        </tr>`;
+    // Fetch the existing data.json file and update it in localStorage
+async function loadDashboardData() {
+    try {
+        const response = await fetch('assets/storage/json/data.json');
+        const data = await response.json();
 
-    // Set initial values in the form fields (assuming you have input fields for editing)
-    document.getElementById('about-text').value = aboutContent;
-    document.getElementById('programming-skills').value = programmingSkills;
-    document.getElementById('tech-skills').value = techSkills;
-    document.getElementById('projects-data').value = projectsData;
+        // Populate the dashboard fields with existing data
+        document.getElementById('about-text').value = data.aboutMe.content;
+        document.getElementById('programming-skills').value = data.skills.programmingSkills.join(', ');
+        document.getElementById('tech-skills').value = data.skills.techSkills.join(', ');
+        document.getElementById('learning-focus').value = "Current Learning Focus";  // Example
 
-    // Save "About Me" content
-    document.getElementById('save-about').addEventListener('click', () => {
-        const newAboutContent = document.getElementById('about-text').value;
-        localStorage.setItem('aboutContent', newAboutContent);
-        alert('About Me updated!');
-    });
+        // Populate resume, learning progress, and project thumbnails
 
-    // Save Skills
-    document.getElementById('save-skills').addEventListener('click', () => {
-        const newProgrammingSkills = document.getElementById('programming-skills').value;
-        const newTechSkills = document.getElementById('tech-skills').value;
-        localStorage.setItem('programmingSkills', newProgrammingSkills);
-        localStorage.setItem('techSkills', newTechSkills);
-        alert('Skills updated!');
-    });
+        // Store the data in localStorage (this simulates saving back to the JSON file)
+        localStorage.setItem('portfolioData', JSON.stringify(data));
 
-    // Save Projects
-    document.getElementById('save-projects').addEventListener('click', () => {
-        const newProjectsData = document.getElementById('projects-data').value;
-        localStorage.setItem('projectsData', newProjectsData);
-        alert('Projects updated!');
-    });
+    } catch (error) {
+        console.error("Error loading dashboard data:", error);
+    }
+}
+
+// Save the updated data back to localStorage (to simulate JSON save)
+function saveDashboardData() {
+    const updatedData = {
+        aboutMe: {
+            content: document.getElementById('about-text').value
+        },
+        skills: {
+            programmingSkills: document.getElementById('programming-skills').value.split(',').map(skill => skill.trim()),
+            techSkills: document.getElementById('tech-skills').value.split(',').map(skill => skill.trim())
+        },
+        // Additional saving logic for Learning Progress, Projects, and Resume
+    };
+
+    localStorage.setItem('portfolioData', JSON.stringify(updatedData));
+
+    alert('Portfolio data updated successfully!');
+}
+
+// Example save button event listener
+document.getElementById('save-button').addEventListener('click', saveDashboardData);
+
 });
 
 
