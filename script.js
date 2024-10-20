@@ -37,6 +37,34 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    const devProtection = true;  // Set to true to block DevTools, false during development
+
+if (devProtection) {
+    // Disable right-click and common DevTools shortcuts
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        // F12 or Ctrl+Shift+I
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
+            e.preventDefault();
+            alert('Developer tools are disabled.');
+        }
+    });
+
+    // Detect DevTools
+    setInterval(() => {
+        const devTools = new Function('debugger');
+        try {
+            devTools();
+        } catch (e) {
+            console.warn('Developer tools are open!');
+            alert('Please close developer tools to continue.');
+        }
+    }, 1000); // Check every second
+}
     // Check if data exists in localStorage, otherwise use default values
     const aboutContent = localStorage.getItem('aboutContent') || 'Hello! I\'m Michael T, passionate about cybersecurity, blockchain, and game development.';
     const programmingSkills = localStorage.getItem('programmingSkills') || 'JavaScript, Python, Java, Solidity';
