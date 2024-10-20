@@ -28,7 +28,6 @@ function animateSections() {
 
 // Add the scroll event listener with debounce
 window.addEventListener('scroll', debounce(animateSections));
-
 // Mobile menu toggle
 const mobileMenuToggle = document.createElement('div');
 mobileMenuToggle.className = 'mobile-menu-toggle';
